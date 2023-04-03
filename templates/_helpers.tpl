@@ -60,3 +60,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "v2ray.tls.secretName" -}}
+  {{- if eq .Values.tls.certSource "secret" -}}
+    {{- .Values.tls.secretName -}}
+  {{- else -}}
+    {{- printf "%s-tls" (include "v2ray.fullname" .) -}}
+  {{- end -}}
+{{- end -}}

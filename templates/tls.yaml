@@ -1,0 +1,14 @@
+{{- if and .Values.tls.enabled }}
+{{- if eq .Values.tls.certSource "manual" }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ template "v2ray.tls.secretName" . }}"
+  labels:
+{{ include "v2ray.labels" . | indent 4 }}
+type: kubernetes.io/tls
+data:
+  tls.crt: {{ (required "The \"tls.crt\" is required!" .Values.tls.crt) | b64enc | quote }}
+  tls.key: {{ (required "The \"tls.key\" is required!" .Values.tls.key) | b64enc | quote }}
+{{- end }}
+{{- end }}

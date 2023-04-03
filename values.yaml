@@ -86,17 +86,24 @@ affinity: {}
 tls:
   # Enable TLS traffic
   enabled: false
+  # There are three ways to provide tls
+  # 1) "manual" need provide cert file manually in following value
+  # 2) "secret" internal certificates from secret
+  certSource: "secret"
   #
   # Name of the Secret that contains the certificates
-  certificatesSecret: v2ray-tls
+  secretName: v2ray-tls
   #
   # Certificate filename
-  certFilename: v2ray.pem
+  crt: ""
   #
   # Certificate Key filename
-  certKeyFilename: v2ray.key
+  key: ""
 
-configmap: |-
+##
+## The config.json to pass to the server
+##
+config:
   {
     "log": {},
     "api": {},

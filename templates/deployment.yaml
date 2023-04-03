@@ -77,10 +77,5 @@ spec:
         - name: v2ray-tls
           secret:
             defaultMode: 420
-            secretName: {{ .Values.tls.certificatesSecret }}
-            items:
-              - key: tls.crt
-                path: {{ .Values.tls.certFilename }}
-              - key: tls.key
-                path: {{ .Values.tls.certKeyFilename }}
+            secretName: {{ template "v2ray.tls.secretName" . }}
       {{- end }}
