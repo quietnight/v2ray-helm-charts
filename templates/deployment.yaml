@@ -72,12 +72,8 @@ spec:
       {{- end }}
       volumes:
         - name: v2ray-config
-          configMap:
-              name: v2ray-config
-              defaultMode: 420
-              items:
-                - key: config.json
-                  path: config.json
+          secret:
+            secretName: "{{ template "v2ray.fullname" . }}-config"
       {{- if .Values.tls.enabled }}
         - name: v2ray-tls
           secret:
