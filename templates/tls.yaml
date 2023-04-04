@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: "{{ template "v2ray.tls.secretName" . }}"
+  name: "{{ template "xray.tls.secretName" . }}"
   labels:
-{{ include "v2ray.labels" . | indent 4 }}
+{{ include "xray.labels" . | indent 4 }}
 type: kubernetes.io/tls
 data:
   tls.crt: {{ (required "The \"tls.crt\" is required!" .Values.tls.crt) | b64enc | quote }}

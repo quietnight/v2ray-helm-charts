@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "v2ray.fullname" . }}
+  name: {{ include "xray.fullname" . }}
   labels:
-    {{- include "v2ray.labels" . | nindent 4 }}
+    {{- include "xray.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "v2ray.selectorLabels" . | nindent 6 }}
+      {{- include "xray.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "v2ray.selectorLabels" . | nindent 8 }}
+        {{- include "xray.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "v2ray.serviceAccountName" . }}
+      serviceAccountName: {{ include "xray.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -51,11 +51,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: /etc/v2ray/
-              name: v2ray-config
+            - mountPath: /etc/xray/
+              name: xray-config
           {{- if .Values.tls.enabled }}
-            - mountPath: /etc/v2ray/tls
-              name: v2ray-tls
+            - mountPath: /etc/xray/tls
+              name: xray-tls
               readOnly: true
           {{- end }}
       {{- with .Values.nodeSelector }}
@@ -71,12 +71,12 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: v2ray-config
+        - name: xray-config
           secret:
-            secretName: "{{ template "v2ray.fullname" . }}-config"
+            secretName: "{{ template "xray.fullname" . }}-config"
       {{- if .Values.tls.enabled }}
-        - name: v2ray-tls
+        - name: xray-tls
           secret:
             defaultMode: 420
-            secretName: {{ template "v2ray.tls.secretName" . }}
+            secretName: {{ template "xray.tls.secretName" . }}
       {{- end }}

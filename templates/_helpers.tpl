@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "v2ray.name" -}}
+{{- define "xray.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "v2ray.fullname" -}}
+{{- define "xray.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "v2ray.chart" -}}
+{{- define "xray.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "v2ray.labels" -}}
-helm.sh/chart: {{ include "v2ray.chart" . }}
-{{ include "v2ray.selectorLabels" . }}
+{{- define "xray.labels" -}}
+helm.sh/chart: {{ include "xray.chart" . }}
+{{ include "xray.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,26 +45,26 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "v2ray.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "v2ray.name" . }}
+{{- define "xray.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "xray.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "v2ray.serviceAccountName" -}}
+{{- define "xray.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "v2ray.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "xray.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
-{{- define "v2ray.tls.secretName" -}}
+{{- define "xray.tls.secretName" -}}
   {{- if eq .Values.tls.certSource "secret" -}}
     {{- .Values.tls.secretName -}}
   {{- else -}}
-    {{- printf "%s-tls" (include "v2ray.fullname" .) -}}
+    {{- printf "%s-tls" (include "xray.fullname" .) -}}
   {{- end -}}
 {{- end -}}

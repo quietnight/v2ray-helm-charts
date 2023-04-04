@@ -1,11 +1,11 @@
-# Default values for v2ray.
+# Default values for xray.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: v2fly/v2fly-core
+  repository: teddysun/xray
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -42,7 +42,7 @@ service:
   type: ClusterIP
   port: 80
   targetPort: 80
-  name: v2ray
+  name: xray
 
 ingress:
   enabled: false
@@ -94,7 +94,7 @@ tls:
   certSource: "secret"
   #
   # Name of the Secret that contains the certificates
-  secretName: v2ray-tls
+  secretName: xray-tls
   #
   # Certificate filename
   crt: ""
